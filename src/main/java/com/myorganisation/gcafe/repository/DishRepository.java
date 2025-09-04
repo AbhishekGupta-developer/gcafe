@@ -22,4 +22,12 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
     //Custom JPQL (Java Persistence Query Language)
     @Query("SELECT d FROM Dish d WHERE d.id = :identity")
     Dish getDishById(@Param("identity") Long id);
+
+    //Native SQL Query
+    @Query(value = "SELECT * FROM dish WHERE category = :category", nativeQuery = true)
+    List<Dish> getAllDishByCategory(@Param("category") String category);
+
+    @Query(value = "SELECT d.* FROM dish d WHERE d.price BETWEEN ?1 AND ?2", nativeQuery = true)
+    List<Dish> getAllDishByPriceRange(Double min, Double max);
+
 }
