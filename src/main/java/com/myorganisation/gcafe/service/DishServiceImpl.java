@@ -3,6 +3,7 @@ package com.myorganisation.gcafe.service;
 import com.myorganisation.gcafe.dto.request.DishRequestDto;
 import com.myorganisation.gcafe.dto.response.DishResponseDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
+import com.myorganisation.gcafe.enums.DishCategory;
 import com.myorganisation.gcafe.model.Dish;
 import com.myorganisation.gcafe.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,18 @@ public class DishServiceImpl implements DishService {
     public List<DishResponseDto> searchDish(String q, Double min, Double max) {
         List<Dish> dishList = dishRepository.findByNameContainingAndPriceBetween(q, min, max);
 
+        List<DishResponseDto> dishResponseDtoList = new ArrayList<>();
+
+        for(Dish dish : dishList) {
+            dishResponseDtoList.add(mapDishToDishResponseDto(dish));
+        }
+
+        return dishResponseDtoList;
+    }
+
+    @Override
+    public List<DishResponseDto> getAllDishByCategory(DishCategory dishCategory) {
+        List<Dish> dishList = dishRepository.getAllDishByCategory(dishCategory);
         List<DishResponseDto> dishResponseDtoList = new ArrayList<>();
 
         for(Dish dish : dishList) {
