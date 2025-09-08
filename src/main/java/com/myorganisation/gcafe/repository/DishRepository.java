@@ -30,4 +30,7 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
     @Query(value = "SELECT d.* FROM dish d WHERE d.price BETWEEN ?1 AND ?2", nativeQuery = true)
     List<Dish> getAllDishByPriceRange(Double min, Double max);
 
+    default List<Dish> getAllDishByCategory(DishCategory dishCategory) {
+        return getAllDishByCategory(dishCategory.name());
+    }
 }
