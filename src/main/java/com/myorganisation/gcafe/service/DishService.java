@@ -3,6 +3,7 @@ package com.myorganisation.gcafe.service;
 import com.myorganisation.gcafe.dto.request.DishRequestDto;
 import com.myorganisation.gcafe.dto.response.DishResponseDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
+import com.myorganisation.gcafe.enums.DishCategory;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface DishService {
 
     //Custom finder methods
     List<DishResponseDto> searchDish(String q, Double min, Double max);
+
+    List<DishResponseDto> getAllDishByCategory(DishCategory dishCategory);
 
 }
