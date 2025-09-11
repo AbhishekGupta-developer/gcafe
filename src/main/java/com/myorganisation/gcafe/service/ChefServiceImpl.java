@@ -37,7 +37,16 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public ChefResponseDto getChef(Long id) {
-        return null;
+        Chef chef = chefRepository.findById(id).orElse(null);
+
+        ChefResponseDto chefResponseDto = new ChefResponseDto();
+
+        chefResponseDto.setId(chef.getId());
+        chefResponseDto.setName(chef.getName());
+        chefResponseDto.setExperience(chef.getExperience());
+        chefResponseDto.setCuisine(chef.getCuisine());
+
+        return chefResponseDto;
     }
 
     @Override
