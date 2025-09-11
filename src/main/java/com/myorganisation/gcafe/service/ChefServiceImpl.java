@@ -90,6 +90,20 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public GenericResponseDto removeChef(Long id) {
-        return null;
+        Chef chef = chefRepository.findById(id).orElse(null);
+        GenericResponseDto genericResponseDto = new GenericResponseDto();
+
+        if(chef != null) {
+            String name = chef.getName();
+            String message = "Chef name: " + name + "(" + id + ") has been removed";
+
+            genericResponseDto.setSuccess(true);
+            genericResponseDto.setMessage(message);
+        } else {
+            genericResponseDto.setSuccess(false);
+            genericResponseDto.setMessage("Chef id: " + id + " not found");
+        }
+
+        return genericResponseDto;
     }
 }
