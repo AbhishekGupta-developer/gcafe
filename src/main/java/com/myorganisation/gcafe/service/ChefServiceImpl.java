@@ -8,6 +8,7 @@ import com.myorganisation.gcafe.repository.ChefRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -51,7 +52,21 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public List<ChefResponseDto> getAllChef() {
-        return List.of();
+        List<Chef> chefList = new LinkedList<>(chefRepository.findAll());
+        List<ChefResponseDto> chefResponseDtoList = new LinkedList<>();
+
+        for(Chef chef : chefList) {
+            ChefResponseDto chefResponseDto = new ChefResponseDto();
+
+            chefResponseDto.setId(chef.getId());
+            chefResponseDto.setName(chef.getName());
+            chefResponseDto.setExperience(chef.getExperience());
+            chefResponseDto.setCuisine(chef.getCuisine());
+
+            chefResponseDtoList.add(chefResponseDto);
+        }
+
+        return chefResponseDtoList;
     }
 
     @Override
