@@ -18,4 +18,8 @@ public class Chef {
     @Enumerated(EnumType.STRING)
     private Cuisine cuisine;
 
+    @OneToOne
+    @JoinColumn(name = "account")
+    private Account account;
+
 }
