@@ -3,7 +3,9 @@ package com.myorganisation.gcafe.service;
 import com.myorganisation.gcafe.dto.request.ChefRequestDto;
 import com.myorganisation.gcafe.dto.response.ChefResponseDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
+import com.myorganisation.gcafe.model.Account;
 import com.myorganisation.gcafe.model.Chef;
+import com.myorganisation.gcafe.repository.AccountRepository;
 import com.myorganisation.gcafe.repository.ChefRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class ChefServiceImpl implements ChefService {
     @Autowired
     private ChefRepository chefRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     @Override
     public ChefResponseDto registerChef(ChefRequestDto chefRequestDto) {
         Chef chef = new Chef();
@@ -24,7 +29,15 @@ public class ChefServiceImpl implements ChefService {
         chef.setExperience(chefRequestDto.getExperience());
         chef.setCuisine(chefRequestDto.getCuisine());
 
+        Account account = new Account();
+        accountRepository.save(account);
+
+        chef.setAccount(account);
+
         chefRepository.save(chef);
+
+        account.setChef(chef);
+        accountRepository.save(account);
 
         ChefResponseDto chefResponseDto = new ChefResponseDto();
 
