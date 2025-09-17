@@ -30,14 +30,14 @@ public class ChefServiceImpl implements ChefService {
         chef.setCuisine(chefRequestDto.getCuisine());
 
         Account account = new Account();
-        accountRepository.save(account);
-
+//        accountRepository.save(account);
+        account.setChef(chef);
         chef.setAccount(account);
 
         chefRepository.save(chef);
 
-        account.setChef(chef);
-        accountRepository.save(account);
+//        account.setChef(chef);
+//        accountRepository.save(account);
 
         ChefResponseDto chefResponseDto = new ChefResponseDto();
 
