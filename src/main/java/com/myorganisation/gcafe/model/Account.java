@@ -1,5 +1,6 @@
 package com.myorganisation.gcafe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myorganisation.gcafe.enums.AccountStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,5 +21,6 @@ public class Account {
 
     @OneToOne
     @JoinColumn(name = "chef")
+    @JsonIgnore
     private Chef chef;
 }
