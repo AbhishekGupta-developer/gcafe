@@ -19,7 +19,7 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountStatus status = AccountStatus.ACTIVE;
 
-    @OneToOne
+    @OneToOne(mappedBy = "account")
     @JoinColumn(name = "chef")
     @JsonIgnore
     private Chef chef;
