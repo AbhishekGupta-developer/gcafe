@@ -45,6 +45,7 @@ public class ChefServiceImpl implements ChefService {
         chefResponseDto.setName(chef.getName());
         chefResponseDto.setExperience(chef.getExperience());
         chefResponseDto.setCuisine(chef.getCuisine());
+        chefResponseDto.setAccount(chef.getAccount());
 
         return chefResponseDto;
     }
@@ -59,6 +60,7 @@ public class ChefServiceImpl implements ChefService {
         chefResponseDto.setName(chef.getName());
         chefResponseDto.setExperience(chef.getExperience());
         chefResponseDto.setCuisine(chef.getCuisine());
+        chefResponseDto.setAccount(chef.getAccount());
 
         return chefResponseDto;
     }
@@ -107,6 +109,7 @@ public class ChefServiceImpl implements ChefService {
         GenericResponseDto genericResponseDto = new GenericResponseDto();
 
         if(chef != null) {
+            chefRepository.deleteById(id);
             String name = chef.getName();
             String message = "Chef name: " + name + "(" + id + ") has been removed";
 
