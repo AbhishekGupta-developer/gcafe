@@ -4,6 +4,7 @@ import com.myorganisation.gcafe.dto.request.DishRequestDto;
 import com.myorganisation.gcafe.dto.response.DishResponseDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
 import com.myorganisation.gcafe.enums.DishCategory;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface DishService {
     List<DishResponseDto> searchDish(String q, Double min, Double max);
 
     List<DishResponseDto> getAllDishByCategory(DishCategory dishCategory);
+
+    Page<DishResponseDto> getDishPage(Integer pageIndex, Integer pageSize, String sortByAttribute, String sortInOrder);
 
 }
