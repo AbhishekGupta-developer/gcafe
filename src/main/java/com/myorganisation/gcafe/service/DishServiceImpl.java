@@ -7,6 +7,10 @@ import com.myorganisation.gcafe.enums.DishCategory;
 import com.myorganisation.gcafe.model.Dish;
 import com.myorganisation.gcafe.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -104,6 +108,19 @@ public class DishServiceImpl implements DishService {
         }
 
         return dishResponseDtoList;
+    }
+
+    @Override
+    public Page<DishResponseDto> getDishPage(Integer pageIndex, Integer pageSize, String sortByAttribute, String sortInOrder) {
+        Sort sort = (sortInOrder.equalsIgnoreCase("desc")) ? Sort.by(sortByAttribute).descending() : Sort.by(sortByAttribute).ascending();
+
+        Pageable pageable = PageRequest.of(pageIndex, pageSize, sort);
+
+        Page<Dish> dishPage = dishRepository.findAll(pageable);
+
+        Page<DishResponseDto> dishResponseDtoPage = dishPage.map(dish ->mapDishToDishResponseDto(dish));
+
+        return dishResponseDtoPage;
     }
 
     //Helper methods
