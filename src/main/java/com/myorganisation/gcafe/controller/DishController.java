@@ -5,6 +5,7 @@ import com.myorganisation.gcafe.dto.response.DishResponseDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
 import com.myorganisation.gcafe.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,23 @@ public class DishController {
             @RequestParam Double max
     ) {
         return new ResponseEntity<>(dishService.searchDish(q, min, max), HttpStatusCode.valueOf(200));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<DishResponseDto>> getDishPage(
+            @RequestParam(defaultValue = "0") Integer pageIndex,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortByAttribute,
+            @RequestParam(defaultValue = "asc") String sortInOrder
+    ) {
+        return new ResponseEntity<>(
+                dishService.getDishPage(
+                        pageIndex,
+                        pageSize,
+                        sortByAttribute,
+                        sortInOrder
+                ),
+                HttpStatusCode.valueOf(200)
+        );
     }
 }
