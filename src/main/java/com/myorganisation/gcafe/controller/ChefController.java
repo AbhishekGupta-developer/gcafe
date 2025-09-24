@@ -1,8 +1,10 @@
 package com.myorganisation.gcafe.controller;
 
 import com.myorganisation.gcafe.dto.request.ChefRequestDto;
+import com.myorganisation.gcafe.dto.response.AccountResponseDto;
 import com.myorganisation.gcafe.dto.response.ChefResponseDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
+import com.myorganisation.gcafe.service.ChefBalanceService;
 import com.myorganisation.gcafe.service.ChefService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,9 @@ public class ChefController {
 
     @Autowired
     private ChefService chefService;
+
+    @Autowired
+    private ChefBalanceService chefBalanceService;
 
     @PostMapping
     public ResponseEntity<ChefResponseDto> registerChef(@RequestBody ChefRequestDto chefRequestDto) {
@@ -52,5 +57,10 @@ public class ChefController {
             @RequestParam(defaultValue = "asc") String sortInOrder
     ) {
         return new ResponseEntity<>(chefService.getChefPage(pageIndex, pageSize, sortByAttribute, sortInOrder), HttpStatusCode.valueOf(200));
+    }
+
+    @PostMapping("/add-amount")
+    public ResponseEntity<AccountResponseDto> addAmount(@RequestParam Long chefId, @RequestParam Double amount) {
+        return new ResponseEntity<>(chefBalanceService.addAmount(chefId, amount), HttpStatusCode.valueOf(200));
     }
 }
