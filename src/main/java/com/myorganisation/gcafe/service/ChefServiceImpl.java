@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ChefServiceImpl implements ChefService {
     private AccountRepository accountRepository;
 
     @Override
+    @Transactional
     public ChefResponseDto registerChef(ChefRequestDto chefRequestDto) {
         Chef chef = new Chef();
         chef.setName(chefRequestDto.getName());
@@ -38,6 +40,12 @@ public class ChefServiceImpl implements ChefService {
         account.setChef(chef);
         chef.setAccount(account);
 
+        chefRepository.save(chef);
+
+        chef.getAccount().setAmount(1000D);
+//        if(true) {
+//            throw new RuntimeException("Amount not credited");
+//        }
         chefRepository.save(chef);
 
 //        account.setChef(chef);
