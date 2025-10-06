@@ -15,4 +15,9 @@ public class CronJobs {
             count = 0;
         }
     }
+
+    @Scheduled(cron = "${default.cron.job.frequency}")
+    private void taskAccordingToProfile() {
+        System.out.println("I'm running");
+    }
 }
