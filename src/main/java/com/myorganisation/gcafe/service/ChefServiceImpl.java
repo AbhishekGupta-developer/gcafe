@@ -3,6 +3,7 @@ package com.myorganisation.gcafe.service;
 import com.myorganisation.gcafe.dto.request.ChefRequestDto;
 import com.myorganisation.gcafe.dto.response.ChefResponseDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
+import com.myorganisation.gcafe.exception.ChefNotFoundException;
 import com.myorganisation.gcafe.model.Account;
 import com.myorganisation.gcafe.model.Chef;
 import com.myorganisation.gcafe.repository.AccountRepository;
@@ -64,7 +65,7 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public ChefResponseDto getChef(Long id) {
-        Chef chef = chefRepository.findById(id).orElse(null);
+        Chef chef = chefRepository.findById(id).orElseThrow(() -> new ChefNotFoundException("Chef id: " + id + " doesn't exist"));
 
         ChefResponseDto chefResponseDto = new ChefResponseDto();
 
