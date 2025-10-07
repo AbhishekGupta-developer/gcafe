@@ -43,7 +43,6 @@ public class ChefServiceImpl implements ChefService {
 
         chefRepository.save(chef);
 
-        chef.getAccount().setAmount(1000D);
 //        if(true) {
 //            throw new RuntimeException("Amount not credited");
 //        }
@@ -52,30 +51,14 @@ public class ChefServiceImpl implements ChefService {
 //        account.setChef(chef);
 //        accountRepository.save(account);
 
-        ChefResponseDto chefResponseDto = new ChefResponseDto();
-
-        chefResponseDto.setId(chef.getId());
-        chefResponseDto.setName(chef.getName());
-        chefResponseDto.setExperience(chef.getExperience());
-        chefResponseDto.setCuisine(chef.getCuisine());
-        chefResponseDto.setAccount(chef.getAccount());
-
-        return chefResponseDto;
+        return mapChefToChefResponseDto(chef);
     }
 
     @Override
     public ChefResponseDto getChef(Long id) {
         Chef chef = chefRepository.findById(id).orElseThrow(() -> new ChefNotFoundException("Chef id: " + id + " doesn't exist"));
 
-        ChefResponseDto chefResponseDto = new ChefResponseDto();
-
-        chefResponseDto.setId(chef.getId());
-        chefResponseDto.setName(chef.getName());
-        chefResponseDto.setExperience(chef.getExperience());
-        chefResponseDto.setCuisine(chef.getCuisine());
-        chefResponseDto.setAccount(chef.getAccount());
-
-        return chefResponseDto;
+        return mapChefToChefResponseDto(chef);
     }
 
     @Override
@@ -89,14 +72,7 @@ public class ChefServiceImpl implements ChefService {
         List<ChefResponseDto> chefResponseDtoList = new LinkedList<>();
 
         for(Chef chef : chefList) {
-            ChefResponseDto chefResponseDto = new ChefResponseDto();
-
-            chefResponseDto.setId(chef.getId());
-            chefResponseDto.setName(chef.getName());
-            chefResponseDto.setExperience(chef.getExperience());
-            chefResponseDto.setCuisine(chef.getCuisine());
-
-            chefResponseDtoList.add(chefResponseDto);
+            chefResponseDtoList.add(mapChefToChefResponseDto(chef));
         }
 
         return chefResponseDtoList;
@@ -111,14 +87,7 @@ public class ChefServiceImpl implements ChefService {
 
         chefRepository.save(chef);
 
-        ChefResponseDto chefResponseDto = new ChefResponseDto();
-
-        chefResponseDto.setId(chef.getId());
-        chefResponseDto.setName(chef.getName());
-        chefResponseDto.setExperience(chef.getExperience());
-        chefResponseDto.setCuisine(chef.getCuisine());
-
-        return chefResponseDto;
+        return mapChefToChefResponseDto(chef);
     }
 
     @Override
