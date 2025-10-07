@@ -81,6 +81,11 @@ public class ChefServiceImpl implements ChefService {
     @Override
     public List<ChefResponseDto> getAllChef() {
         List<Chef> chefList = new LinkedList<>(chefRepository.findAll());
+
+        if(chefList.isEmpty()) {
+            throw new ChefNotFoundException("No chef found");
+        }
+
         List<ChefResponseDto> chefResponseDtoList = new LinkedList<>();
 
         for(Chef chef : chefList) {
@@ -99,7 +104,7 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public ChefResponseDto updateChef(Long id, ChefRequestDto chefRequestDto) {
-        Chef chef = chefRepository.findById(id).orElse(null);
+        Chef chef = chefRepository.findById(id).orElseThrow(() -> new ChefNotFoundException("Chef id: " + id + " doesn't exist"));
         chef.setName(chefRequestDto.getName());
         chef.setExperience(chefRequestDto.getExperience());
         chef.setCuisine(chefRequestDto.getCuisine());
@@ -118,20 +123,17 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public GenericResponseDto removeChef(Long id) {
-        Chef chef = chefRepository.findById(id).orElse(null);
+        Chef chef = chefRepository.findById(id).orElseThrow(() -> new ChefNotFoundException("Chef id: " + id + " doesn't exist"));
+
         GenericResponseDto genericResponseDto = new GenericResponseDto();
 
-        if(chef != null) {
-            chefRepository.deleteById(id);
-            String name = chef.getName();
-            String message = "Chef name: " + name + "(" + id + ") has been removed";
+        chefRepository.deleteById(id);
 
-            genericResponseDto.setSuccess(true);
-            genericResponseDto.setMessage(message);
-        } else {
-            genericResponseDto.setSuccess(false);
-            genericResponseDto.setMessage("Chef id: " + id + " not found");
-        }
+        String name = chef.getName();
+        String message = "Chef name: " + name + "(" + id + ") has been removed";
+
+        genericResponseDto.setSuccess(true);
+        genericResponseDto.setMessage(message);
 
         return genericResponseDto;
     }
