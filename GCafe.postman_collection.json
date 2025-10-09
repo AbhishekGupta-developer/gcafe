@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "0cbdd4d5-a090-4fd6-8115-977aeae6bf22",
+		"name": "GCafe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41965744"
+	},
+	"item": [
+		{
+			"name": "Server status",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}",
+					"host": [
+						"{{host}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add dish",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kadhayi Paneer\",\r\n    \"price\": \"1000\",\r\n    \"category\": \"VEG\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/dish",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"dish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get dish by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/dish/222",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"dish",
+						"222"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all dish",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/dish",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"dish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update dish",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kadhayi Paneer\",\r\n    \"price\": 2000.0,\r\n    \"category\": \"VEG\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/dish/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"dish",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove dish",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/dish?id=1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"dish"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add chef",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sunny Deol\",\r\n    \"experience\": \"1.5\",\r\n    \"cuisine\": \"INDIAN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/chef",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"chef"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Chef by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/chef/54",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"chef",
+						"54"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all chefs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/chef",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"chef"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update chef",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sunny Singh\",\r\n    \"experience\": \"1.5\",\r\n    \"cuisine\": \"INDIAN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/chef/32",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"chef",
+						"32"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove chef",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/chef?id=32",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"chef"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "32"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
