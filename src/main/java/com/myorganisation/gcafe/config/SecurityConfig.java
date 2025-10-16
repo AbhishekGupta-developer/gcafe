@@ -2,6 +2,7 @@ package com.myorganisation.gcafe.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,7 +27,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/").permitAll()
-                                .requestMatchers("/api/dish", "/api/dish/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/dish", "/api/dish/**").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/api/dish", "/api/dish/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                                 .requestMatchers("/api", "/api/**").authenticated()
                                 .anyRequest().authenticated()
                 )
