@@ -1,5 +1,6 @@
 package com.myorganisation.gcafe.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,20 @@ public class JwtUtil {
                 .expiration(new Date(System.currentTimeMillis() + AUTH_EXPIRATION))
                 .signWith(KEY, Jwts.SIG.HS256)
                 .compact();
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(KEY)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public String extractUsername(String token) {
+        Claims body = getClaims(token);
+
+        return body.getSubject();
     }
 
 }
