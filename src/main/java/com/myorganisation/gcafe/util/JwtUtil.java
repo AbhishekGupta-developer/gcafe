@@ -22,7 +22,6 @@ public class JwtUtil {
 
     private final String SECRET;
     private final SecretKey KEY;
-    private final long AUTH_EXPIRATION;
 
     public JwtUtil(@Value("${jwt.secret}") String jwtSecret) {
         SECRET = jwtSecret;
