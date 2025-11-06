@@ -26,10 +26,7 @@ public class JwtUtil {
     public JwtUtil(@Value("${jwt.secret}") String jwtSecret) {
         SECRET = jwtSecret;
         KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
-        AUTH_EXPIRATION = 1000 * 60 * 5; // Valid for 5 mins
     }
-
-    public String generateToken(String username) {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
