@@ -34,6 +34,10 @@ public class JwtUtil {
                 .build()
                 .parseSignedClaims(token);
     }
+
+    public String extractEmail(String token) {
+        return parse(token).getPayload().getSubject();
+    }
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
