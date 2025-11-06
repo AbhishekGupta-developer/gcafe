@@ -27,6 +27,13 @@ public class JwtUtil {
         SECRET = jwtSecret;
         KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
     }
+
+    private Jws<Claims> parse(String token) {
+        return Jwts.parser()
+                .verifyWith(KEY)
+                .build()
+                .parseSignedClaims(token);
+    }
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
