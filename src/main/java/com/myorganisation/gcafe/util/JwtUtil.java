@@ -59,20 +59,26 @@ public class JwtUtil {
         }
     }
 
+    // Auth/Signin/Login JWT logic here
+    public String generateAuthToken(String email) {
         return Jwts.builder()
-                .subject(username)
+                .subject(email)
+                .claim(PURPOSE_CLAIM, AUTH_PURPOSE)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + AUTH_EXPIRATION))
                 .signWith(KEY, Jwts.SIG.HS256)
                 .compact();
     }
 
-    private Claims getClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(KEY)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+    public boolean isValidAuthToken(String token) {
+        try {
+            Claims c = parse(token).getPayload();
+            return AUTH_PURPOSE.equals(c.get(PURPOSE_CLAIM, String.class));
+        } catch(JwtException e) {
+            return false;
+        }
+    }
+
     }
 
     public String extractUsername(String token) {
