@@ -11,6 +11,15 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
+    private static final String PURPOSE_CLAIM = "purpose";
+    private static final String SIGNUP_PURPOSE = "signup";
+    private static final String AUTH_PURPOSE = "auth";
+    private static final String PASSWORD_RESET_PURPOSE = "passwordReset";
+
+    private final long SIGNUP_EXPIRATION = 1000 * 60 * 5; // 5 minutes
+    private final long AUTH_EXPIRATION = 1000 * 60 * 60 * 24; // 24 hours
+    private final long PASSWORD_RESET_EXPIRATION = 1000 * 60 * 5; // 5 minutes
+
     private final String SECRET;
     private final SecretKey KEY;
     private final long AUTH_EXPIRATION;
