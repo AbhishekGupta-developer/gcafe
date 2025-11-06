@@ -79,12 +79,24 @@ public class JwtUtil {
         }
     }
 
+    // Password reset JWT logic here
+    public String generatePasswordResetToken(String email) {
+        return Jwts.builder()
+                .subject(email)
+                .claim(PURPOSE_CLAIM, PASSWORD_RESET_PURPOSE)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + PASSWORD_RESET_EXPIRATION))
+                .signWith(KEY, Jwts.SIG.HS256)
+                .compact();
     }
 
-    public String extractUsername(String token) {
-        Claims body = getClaims(token);
-
-        return body.getSubject();
+    public boolean isValidPasswordResetToken(String token) {
+        try {
+            Claims c = parse(token).getPayload();
+            return PASSWORD_RESET_PURPOSE.equals(c.get(PURPOSE_CLAIM, String.class));
+        } catch(JwtException e) {
+            return false;
+        }
     }
 
 }
