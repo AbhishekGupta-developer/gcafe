@@ -38,6 +38,27 @@ public class JwtUtil {
     public String extractEmail(String token) {
         return parse(token).getPayload().getSubject();
     }
+
+    // Signup JWT logic here
+    public String generateSignupToken(String email) {
+        return Jwts.builder()
+                .subject(email)
+                .claim(PURPOSE_CLAIM, SIGNUP_PURPOSE)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + SIGNUP_EXPIRATION))
+                .signWith(KEY, Jwts.SIG.HS256)
+                .compact();
+    }
+
+    public boolean isValidSignupToken(String token) {
+        try {
+            Claims c = parse(token).getPayload();
+            return SIGNUP_PURPOSE.equals(c.get(PURPOSE_CLAIM, String.class));
+        } catch(JwtException e) {
+            return false;
+        }
+    }
+
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
