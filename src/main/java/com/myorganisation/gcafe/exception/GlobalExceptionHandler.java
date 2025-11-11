@@ -20,4 +20,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(genericResponseDto, HttpStatusCode.valueOf(404));
     }
 
+    @ExceptionHandler(InvalidOtpException.class)
+    public ResponseEntity<GenericResponseDto> handleInvalidOtpException(InvalidOtpException e) {
+        GenericResponseDto genericResponseDto = new GenericResponseDto();
+        genericResponseDto.setSuccess(false);
+        genericResponseDto.setMessage(e.getMessage());
+
+        return new ResponseEntity<>(genericResponseDto, HttpStatusCode.valueOf(400));
+    }
+
 }
