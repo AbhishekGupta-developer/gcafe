@@ -6,6 +6,7 @@ import com.myorganisation.gcafe.dto.request.EmailRequestDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
 import com.myorganisation.gcafe.enums.OtpPurpose;
 import com.myorganisation.gcafe.exception.InvalidOtpException;
+import com.myorganisation.gcafe.exception.UserNotFoundException;
 import com.myorganisation.gcafe.model.User;
 import com.myorganisation.gcafe.repository.UserRepository;
 import com.myorganisation.gcafe.store.OtpStore;
@@ -129,5 +130,71 @@ public class EmailServiceImpl implements EmailService {
         }
 
         throw new InvalidOtpException("OTP verification failed");
+    }
+
+    @Override
+    public GenericResponseDto sendSigninAlert(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User email: " + email + " doesn't exist"));
+
+        StringBuilder userFullName = new StringBuilder();
+        userFullName.append((user.getFirstName() != null) ? user.getFirstName() : "");
+        userFullName.append((user.getLastName() != null) ? " " + user.getLastName() : "");
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZoneOffset zoneOffset = OffsetDateTime.now(zoneId).getOffset();
+
+        String currentDate = currentDateTime.format(dateFormatter);
+        String currentTime = currentDateTime.format(timeFormatter);
+        String currentTimeZoneId = String.format("%s (UTC%s)", zoneId.getId(), zoneOffset);
+
+        String time = currentDate + " " + currentTime + " " + currentTimeZoneId;
+        String ipAddress = "Unknown";
+        String device = "Unknown";
+
+        String subject = "GCafe - Signin Alert";
+
+        String htmlBody = """
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <h2 style="color: #4CAF50;">GCafe</h2>
+                        <p>Hello %s,</p>
+                        <p>We noticed a sign-in to your GCafe account.</p>
+                        <p><strong>Sign-in Details:</strong></p>
+                        <ul>
+                            <li>Time: %s</li>
+                            <li>IP Address: %s</li>
+                            <li>Device: %s</li>
+                        </ul>
+                        <p>If this was you, no further action is needed. If you did not sign in, please reset your password immediately.</p>
+                        <p>Thank you,<br/>GCafe Team</p>
+                    </body>
+                </html>
+                """.formatted(userFullName, time, ipAddress, device);
+
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true); // true enables HTML
+
+            mailSender.send(mimeMessage);
+        } catch (Exception e) {
+            return GenericResponseDto.builder()
+                    .success(false)
+                    .message("Failed to send OTP email. Please try again later.")
+                    .build();
+        }
+
+        return GenericResponseDto.builder()
+                .success(true)
+                .message("OTP sent to " + email)
+                .detail(Map.of("purpose", "Signin Alert"))
+                .build();
     }
 }
