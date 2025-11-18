@@ -3,6 +3,7 @@ package com.myorganisation.gcafe.controller;
 import com.myorganisation.gcafe.dto.request.EmailAndPasswordRequestDto;
 import com.myorganisation.gcafe.dto.request.EmailOtpVerificationRequestDto;
 import com.myorganisation.gcafe.dto.request.EmailRequestDto;
+import com.myorganisation.gcafe.dto.request.SigninRequestDto;
 import com.myorganisation.gcafe.dto.response.GenericResponseDto;
 import com.myorganisation.gcafe.enums.OtpPurpose;
 import com.myorganisation.gcafe.service.AuthService;
@@ -40,6 +41,11 @@ public class AuthController {
             @Valid @RequestBody EmailAndPasswordRequestDto emailAndPasswordRequestDto
     ) {
         return new ResponseEntity<>(authService.signup(authHeader, emailAndPasswordRequestDto), HttpStatus.OK);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<GenericResponseDto> signin(@Valid @RequestBody SigninRequestDto signinRequestDto) {
+        return new ResponseEntity<>(authService.signin(signinRequestDto), HttpStatus.OK);
     }
 
 }
