@@ -18,6 +18,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @Service
@@ -58,7 +63,24 @@ public class EmailServiceImpl implements EmailService {
 
         String subject = "GCafe - " + (otpPurpose == OtpPurpose.SIGNUP ? "Signup OTP" : "Password Reset OTP");
 
-        String purposeMessage = "<h1>Your OTP is " + otp + "</h1>";
+        String purposeMessage = (otpPurpose == OtpPurpose.SIGNUP)
+                ? "Use the OTP below to complete your signup process."
+                : "Use the OTP below to reset your password.";
+
+        String htmlBody = """
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <h2 style="color: #4CAF50;">GCafe</h2>
+                        <p>Hello,</p>
+                        <p>%s</p>
+                        <div style="padding: 10px; background-color: #f3f3f3; border-radius: 5px; display: inline-block;">
+                            <h3 style="margin: 0; color: #333;">%s</h3>
+                        </div>
+                        <p>This OTP is valid for <b>5 minutes</b>. Please do not share it with anyone.</p>
+                        <p>Thank you,<br/>GCafe Team</p>
+                    </body>
+                </html>
+                """.formatted(purposeMessage, otp);
 
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -66,11 +88,10 @@ public class EmailServiceImpl implements EmailService {
 
             helper.setTo(email);
             helper.setSubject(subject);
-            helper.setText(purposeMessage, true);
+            helper.setText(htmlBody, true); // true enables HTML
 
             mailSender.send(mimeMessage);
         } catch(Exception e) {
-            System.out.println("An exception occurred during mail sending: " + e.getMessage());
             return GenericResponseDto.builder()
                     .success(false)
                     .message("Failed to send OTP email. Please try again later.")
@@ -79,7 +100,7 @@ public class EmailServiceImpl implements EmailService {
 
         return GenericResponseDto.builder()
                 .success(true)
-                .message("OTP send to " + email)
+                .message("OTP sent to " + email)
                 .detail(Map.of("purpose", otpPurpose.name()))
                 .build();
     }
