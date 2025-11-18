@@ -8,4 +8,5 @@ import com.myorganisation.gcafe.enums.OtpPurpose;
 public interface EmailService {
     GenericResponseDto sendOtp(EmailRequestDto emailRequestDto, OtpPurpose otpPurpose);
     GenericResponseDto verifyOtp(EmailOtpVerificationRequestDto emailOtpVerificationRequestDto, OtpPurpose otpPurpose);
+    GenericResponseDto sendSigninAlert(String email);
 }
