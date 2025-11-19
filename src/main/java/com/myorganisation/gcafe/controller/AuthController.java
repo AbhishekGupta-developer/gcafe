@@ -47,7 +47,7 @@ public class AuthController {
     public ResponseEntity<GenericResponseDto> signin(@Valid @RequestBody SigninRequestDto signinRequestDto) {
         return new ResponseEntity<>(authService.signin(signinRequestDto), HttpStatus.OK);
     }
-    
+
     @PostMapping("/signout")
     public ResponseEntity<GenericResponseDto> signout(@Valid @RequestBody EmailRequestDto emailRequestDto) {
         return null;
@@ -56,6 +56,11 @@ public class AuthController {
     @PostMapping("/forgot-password/email/send-otp")
     public ResponseEntity<GenericResponseDto> sendOtpToResetPassword(@Valid @RequestBody EmailRequestDto emailRequestDto) {
         return new ResponseEntity<>(emailService.sendOtp(emailRequestDto, OtpPurpose.PASSWORD_RESET), HttpStatus.OK);
+    }
+
+    @PostMapping("/forgot-password/email/verify-otp")
+    public ResponseEntity<GenericResponseDto> verifyOtpToResetPassword(@Valid @RequestBody EmailOtpVerificationRequestDto emailOtpVerificationRequestDto) {
+        return new ResponseEntity<>(emailService.verifyOtp(emailOtpVerificationRequestDto, OtpPurpose.PASSWORD_RESET), HttpStatus.OK);
     }
 
 }
