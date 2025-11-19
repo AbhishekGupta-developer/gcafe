@@ -63,4 +63,12 @@ public class AuthController {
         return new ResponseEntity<>(emailService.verifyOtp(emailOtpVerificationRequestDto, OtpPurpose.PASSWORD_RESET), HttpStatus.OK);
     }
 
+    @PostMapping("/forgot-password/reset")
+    public ResponseEntity<GenericResponseDto> resetPassword(
+            @RequestHeader("Authorization") String authHeader,
+            @Valid @RequestBody EmailAndPasswordRequestDto emailAndPasswordRequestDto
+    ) {
+        return new ResponseEntity<>(authService.resetPassword(authHeader, emailAndPasswordRequestDto), HttpStatus.OK);
+    }
+
 }
