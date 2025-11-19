@@ -47,5 +47,10 @@ public class AuthController {
     public ResponseEntity<GenericResponseDto> signin(@Valid @RequestBody SigninRequestDto signinRequestDto) {
         return new ResponseEntity<>(authService.signin(signinRequestDto), HttpStatus.OK);
     }
+    
+    @PostMapping("/signout")
+    public ResponseEntity<GenericResponseDto> signout(@Valid @RequestBody EmailRequestDto emailRequestDto) {
+        return null;
+    }
 
 }
