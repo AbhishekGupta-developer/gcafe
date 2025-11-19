@@ -53,4 +53,9 @@ public class AuthController {
         return null;
     }
 
+    @PostMapping("/forgot-password/email/send-otp")
+    public ResponseEntity<GenericResponseDto> sendOtpToResetPassword(@Valid @RequestBody EmailRequestDto emailRequestDto) {
+        return new ResponseEntity<>(emailService.sendOtp(emailRequestDto, OtpPurpose.PASSWORD_RESET), HttpStatus.OK);
+    }
+
 }
