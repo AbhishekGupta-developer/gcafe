@@ -7,6 +7,260 @@
 	},
 	"item": [
 		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Home API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}",
+							"host": [
+								"{{host}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Send  Email OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"itnitinkumar1419@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/auth/signup/email/send-otp",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup",
+								"email",
+								"send-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Verify Email OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"itnitinkumar1419@gmail.com\",\r\n    \"otp\": \"380636\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/auth/signup/email/verify-otp",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup",
+								"email",
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Set Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmhpc2hla2cuZHVjYXRAZ21haWwuY29tIiwicHVycG9zZSI6InNpZ251cCIsImlhdCI6MTc2MzM4MjM0NCwiZXhwIjoxNzYzMzgyNjQ0fQ.xeZy6K_sBjzQE8gnGr7QgvjG_p6TpF5A2Vv94VKUhvk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"abhishekg.ducat@gmail.com\",\r\n    \"password\": \"abhi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmhpc2hla2cuZHVjYXRAZ21haWwuY29tIiwicHVycG9zZSI6InNpZ251cCIsImlhdCI6MTc2MzM4MjM0NCwiZXhwIjoxNzYzMzgyNjQ0fQ.xeZy6K_sBjzQE8gnGr7QgvjG_p6TpF5A2Vv94VKUhvk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"nitinsingh9963@gmail.com\",\r\n    \"password\": \"Abhi@123Ducat\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/auth/signin",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Reset - Send Email OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"patelsapana430@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/auth/forgot-password/email/send-otp",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"forgot-password",
+								"email",
+								"send-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Reset - Verify Email OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"patelsapana430@gmail.com\",\r\n    \"otp\": \"462740\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/auth/forgot-password/email/verify-otp",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"forgot-password",
+								"email",
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Reset - Set Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXRlbHNhcGFuYTQzMEBnbWFpbC5jb20iLCJwdXJwb3NlIjoicGFzc3dvcmRSZXNldCIsImlhdCI6MTc2MzU1NTIwNywiZXhwIjoxNzYzNTU1NTA3fQ.-hSgFTWA_rjkm5dg1mPeDY422cFwH340u0wVAtMa01I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"patelsapana430@gmail.com\",\r\n    \"password\": \"Abc@123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/auth/forgot-password/reset",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"forgot-password",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Server status",
 			"request": {
 				"auth": {
@@ -250,6 +504,75 @@
 							"key": "id",
 							"value": "32"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role\": \"ADMIN\",\r\n    \"username\": \"Abhishek\",\r\n    \"password\": \"root2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/users",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test JWT Token",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Home Controller",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"nitinsingh9963@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}",
+					"host": [
+						"{{host}}"
 					]
 				}
 			},
