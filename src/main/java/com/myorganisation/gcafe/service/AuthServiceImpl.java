@@ -148,6 +148,59 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public GenericResponseDto resetPassword(String authHeader, EmailAndPasswordRequestDto emailAndPasswordRequestDto) {
-        return null;
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return GenericResponseDto.builder()
+                    .success(false)
+                    .message("Missing or malformed token")
+                    .detail(null)
+                    .build();
+        }
+
+        String passwordResetToken = authHeader.substring(7);
+
+        if(passwordResetToken.isEmpty() || !jwtUtil.isValidPasswordResetToken(passwordResetToken)) {
+            return GenericResponseDto.builder()
+                    .success(false)
+                    .message("Invalid or expired password-reset token")
+                    .detail(null)
+                    .build();
+        }
+
+        String emailFromToken = jwtUtil.extractEmail(passwordResetToken);
+        if(!emailFromToken.equalsIgnoreCase(emailAndPasswordRequestDto.getEmail())) {
+            return GenericResponseDto.builder()
+                    .success(false)
+                    .message("Email mismatch")
+                    .detail(null)
+                    .build();
+        }
+
+        User user = userRepository.findByEmail(emailAndPasswordRequestDto.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User email: " + emailAndPasswordRequestDto.getEmail() + " doesn't exist"));
+
+        if(!user.isEmailVerified()) {
+            return GenericResponseDto.builder()
+                    .success(false)
+                    .message("Email not verified")
+                    .detail(null)
+                    .build();
+        }
+
+        if(!user.isActive()) {
+            return GenericResponseDto.builder()
+                    .success(false)
+                    .message("User is not active")
+                    .detail(null)
+                    .build();
+        }
+
+        user.setPassword(passwordEncoder.encode(emailAndPasswordRequestDto.getPassword()));
+        userRepository.save(user);
+
+        return GenericResponseDto.builder()
+                .success(true)
+                .message("Password reset successfully")
+                .detail(null)
+                .build();
     }
 }
